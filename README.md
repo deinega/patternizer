@@ -14,9 +14,8 @@ git clone https://github.com/miloyip/rapidjson.git
 
 If you are on ubuntu, 
 
-sudo apt-get install curl
-
-sudo apt-get install libcurl4-openssl-dev
+	sudo apt-get install curl
+	sudo apt-get install libcurl4-openssl-dev
 
 ## Installation
 
