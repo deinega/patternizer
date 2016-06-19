@@ -3,19 +3,16 @@
 
 #include <string>
 #include <vector>
+#include "quote.h"
 
 using namespace std;
 
-struct Quote{
-
-  string date;
-  double open;
-  double close;
-
-};  
-
-vector<Quote> getQuotes(const string &dataset, const string &symb, 
+class Quandl{
+public:
+    
+    static vector<Quote> getQuotes(const string &dataset, const string &symb, 
         const string &start, const string &end = string(""));
-
+    
+};
 
 #endif
