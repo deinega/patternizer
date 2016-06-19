@@ -8,7 +8,7 @@
 
 using namespace rapidjson;
 
-vector<Quote> getQuotes(const string &dataset, const string &symb, 
+vector<Quote> Quandl::getQuotes(const string &dataset, const string &symb, 
         const string &start, const string &end){
     vector<Quote> quotes;
     
