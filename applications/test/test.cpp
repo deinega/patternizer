@@ -1,6 +1,7 @@
-#include "stdio.h"
-#include "math.h"
+#include <stdio.h>
+#include <math.h>
 #include <string.h>
+#include <stdlib.h>
 #include <vector>
 #include "quandl.h"
 #include "yahoo.h"
@@ -9,20 +10,20 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-
+    
     string dataset = "EOD";
     // string dataset = "WIKI";
     //string dataset = "CUR";
     //string symb = "AAPL";
     string symb = "GE";
     string start = "2010-01-01";
-   
+       
     vector<Quote> quotes;
     
     // test with daily quotes from quandl
-    //quotes = Quandl::getQuotes(dataset, symb, start);
+    quotes = Quandl::getQuotes(dataset, symb, start);
     
-   quotes = Yahoo::getIntradayQuotes(symb, 1);
+   //quotes = Yahoo::getIntradayQuotes(symb, 100);
    /* 
     // test with some math functions
     for(int i=0; i<10000; i++){
@@ -31,6 +32,15 @@ int main(int argc, char *argv[]){
         //quote.open = sin(i/100.);
         quotes.push_back(quote);
     }*/
+   
+    /*vector<double> process = generateMarkovProces(100000, 0, 0, 1);
+    
+    for(size_t i = 0; i< process.size(); i++){
+        Quote quote;
+        quote.open = process[i];
+        quotes.push_back(quote);        
+    }*/
+
     
     printf("data size: %d\n", quotes.size());
     
@@ -61,6 +71,14 @@ int main(int argc, char *argv[]){
         double val = quotes[i].open - quotes[i-1].open;
         vals.push_back(val);
     }
+    
+    vector<double> distr = calculateDistribution(vals, -1, 1, 100);
+    f = fopen("distr", "w");
+    for(int i = 0; i<distr.size(); i++){
+        fprintf(f, "%d\t%.10f\n", i, distr[i]);
+        
+    }
+    fclose(f);
     
     double av = calculateAverage(vals);
     printf("average %g\n", av);
