@@ -11,7 +11,7 @@ class Quandl{
 public:
     
     static vector<Quote> getQuotes(const string &dataset, const string &symb, 
-        const string &start, const string &end = string(""));
+        const string &start = string(""), const string &end = string(""));
     
 };
 
