@@ -15,7 +15,7 @@ vector<Quote> Quandl::getQuotes(const string &dataset, const string &symb,
     string api_key = "-xCLbyy36qbT5583CtoS";
     
     string url = "https://www.quandl.com/api/v3/datasets/" + dataset + "/" + 
-            symb + ".json?api_key=" + api_key + (string == "" ? "" : "&start_date=" + start);
+            symb + ".json?api_key=" + api_key + (start == "" ? "" : string("&start_date=") + start);
     
     string out;
     printf("Sending get request to %s\n", url.c_str());
