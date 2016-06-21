@@ -31,7 +31,7 @@ public:
 
 class Strategy{
 public:
-    virtual double test(vector<Quote> quotes) = 0;
+    virtual double test(const vector<Quote> &quotes) = 0;
 };
 
 class ImageStrategy: public Strategy{
