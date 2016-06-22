@@ -10,7 +10,7 @@ using namespace std;
 class MT{
 public:
     
-    static vector<Quote> getQuotes(const string &fname);
+    static QuoteHistory getQuotes(const string &fname);
     
 
 };

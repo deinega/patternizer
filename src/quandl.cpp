@@ -8,9 +8,9 @@
 
 using namespace rapidjson;
 
-vector<Quote> Quandl::getQuotes(const string &dataset, const string &symb, 
+QuoteHistory Quandl::getQuotes(const string &dataset, const string &symb, 
         const string &start, const string &end){
-    vector<Quote> quotes;
+    QuoteHistory quotes;
     
     string api_key = "-xCLbyy36qbT5583CtoS";
     
@@ -40,7 +40,7 @@ vector<Quote> Quandl::getQuotes(const string &dataset, const string &symb,
         quote.open = val[1].GetDouble();
         quote.close = val[4].GetDouble();
         
-        quotes.push_back(quote);
+        quotes.add(quote);
     }
     
     return quotes;
