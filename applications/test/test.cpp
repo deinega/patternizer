@@ -107,11 +107,11 @@ int main(int argc, char *argv[]){
     strategy.length_future = 5;
     strategy.stop_loss = .01;
     strategy.take_profit = .01;
-    strategy.corr_min = 10;
+    strategy.corr_min = 1e-4;
     strategy.delta_min = 0;
     strategy.study = quotes;
     
-    //strategy.test(quotes);
+    strategy.test(quotes);
 
     
     printf("Done...\n");

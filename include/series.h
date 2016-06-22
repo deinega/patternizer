@@ -2,6 +2,9 @@
 #define _SERIES_H
 
 #include "quandl.h"
+#include <stdio.h>
+
+using namespace std;
 
 template<class it_t>
 double calculateAverage(it_t it, int sz){
@@ -36,6 +39,15 @@ double calculateCorrelation(it1_t it1, it2_t it2, int sz){
         corr += (*it1 - av1) * (*it2 - av2);
     }
     return corr;
+}
+
+template<class it1_t, class it2_t>
+double record(const char *fname, it1_t it1, it2_t it2, int sz){
+    FILE *f = fopen(fname, "w");
+    for(int i=0; i<sz; i++, it1++, it2++){
+        fprintf(f, "%d\t%g\t%g\n", i, *it1, *it2);
+    }
+    fclose(f);
 }
 
 vector<double> generateMarkovProces(int sz, const double start, const double mu, const double sigma);
