@@ -93,7 +93,7 @@ int main(int argc, char *argv[]){
     printf("average %g\n", av);
     f = fopen("auto", "w");
     for(int i = 0; i<10; i++){
-        double aut = calculateAutocorrelation(vals.begin(), vals.size(), i, &av);
+        double aut = calculateAutocorrelation(vals.begin(), vals.size(), i);
         printf("autocorrelation %d %g\n", i, aut);
         
         fprintf(f, "%d\t%.10f\n", i, aut);
