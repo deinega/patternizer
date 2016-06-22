@@ -12,7 +12,8 @@ VPATH = $(TSTDIR):$(SRCDIR)
 
 LIBS = -lcurl
 
-SRC = quandl.cpp web.cpp test.cpp
+SRC = string_utils.cpp series.cpp \
+	quandl.cpp yahoo.cpp mt.cpp web.cpp test.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
