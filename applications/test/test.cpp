@@ -16,7 +16,9 @@ int main(int argc, char *argv[]){
     //string dataset = "CUR";
     //string symb = "AAPL";
     string symb = "GE";
-    string start = "2010-01-01";
+    //string start = "2010-01-01";
+    //string start = "2000-01-01";
+    string start = "1990-01-01";
        
     vector<Quote> quotes;
     
@@ -42,19 +44,19 @@ int main(int argc, char *argv[]){
     }*/
 
     
-    printf("data size: %d\n", quotes.size());
+    printf("data size: %d\n", (int)quotes.size());
     
     // gnuplot file
     FILE *f = fopen(symb.c_str(), "w");
     for(size_t i=0; i<quotes.size(); i++){
-        fprintf(f, "%s\t%d\t%.5f\t%.5f\n", 
+        fprintf(f, "%s\t%ld\t%.5f\t%.5f\n", 
                 quotes[i].date.c_str(), quotes[i].timestamp, quotes[i].open, quotes[i].close);
     }
     fclose(f);
     
     f = fopen((symb+"g").c_str(), "w");
     for(size_t i=1; i<quotes.size(); i++){
-        fprintf(f, "%s\t%d\t%.5f\t%.5f\n", 
+        fprintf(f, "%s\t%ld\t%.5f\t%.5f\n", 
                 quotes[i].date.c_str(), quotes[i].timestamp, 
                 quotes[i].open - quotes[i-1].open, 
                 quotes[i].close - quotes[i-1].close);
@@ -62,17 +64,18 @@ int main(int argc, char *argv[]){
     fclose(f);
 
     vector<double> vals;
-    //for(size_t i=0; i<quotes.size(); i++){
-      //  double val = quotes[i].open;
-      //  vals.push_back(val);
-    //}
+    
+    /*for(size_t i=0; i<quotes.size(); i++){
+        double val = quotes[i].open;
+        vals.push_back(val);
+    }*/
 
     for(size_t i=1; i<quotes.size(); i++){
         double val = quotes[i].open - quotes[i-1].open;
         vals.push_back(val);
     }
     
-    vector<double> distr = calculateDistribution(vals, -1, 1, 100);
+    vector<double> distr = calculateDistribution(vals, -5, 5, 100);
     f = fopen("distr", "w");
     for(int i = 0; i<distr.size(); i++){
         fprintf(f, "%d\t%.10f\n", i, distr[i]);
@@ -80,11 +83,11 @@ int main(int argc, char *argv[]){
     }
     fclose(f);
     
-    double av = calculateAverage(vals);
+    double av = calculateAverage(vals.begin(), vals.size());
     printf("average %g\n", av);
     f = fopen("auto", "w");
     for(int i = 0; i<100; i++){
-        double aut = calculateAutocorrelation(vals, i, &av);
+        double aut = calculateAutocorrelation(vals.begin(), vals.size(), i, &av);
         printf("autocorrelation %d %g\n", i, aut);
         
         fprintf(f, "%d\t%.10f\n", i, aut);
