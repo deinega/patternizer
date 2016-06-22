@@ -1,5 +1,5 @@
-#ifndef _MT
-#define _MT
+#ifndef _MT_H
+#define _MT_H
 
 #include <vector>
 
