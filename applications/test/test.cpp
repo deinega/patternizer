@@ -103,12 +103,12 @@ int main(int argc, char *argv[]){
     
     // here we add testing strategy on historical data quotes
     ImageStrategy strategy;
-    strategy.length = 10;
+    strategy.length = 20;
     strategy.length_future = 5;
     strategy.stop_loss = .01;
     strategy.take_profit = .01;
-    strategy.corr_min = 1e-4;
-    strategy.delta_min = 0;
+    strategy.corr_min = .98;
+    strategy.delta_min = 2e-4;
     strategy.study = quotes;
     
     strategy.test(quotes);
