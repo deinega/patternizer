@@ -9,9 +9,9 @@
 
 using namespace rapidjson;
 
-vector<Quote> Yahoo::getIntradayQuotes(const string &symb, const int days){
+QuoteHistory Yahoo::getIntradayQuotes(const string &symb, const int days){
     
-    vector<Quote> quotes;
+    QuoteHistory quotes;
     
     char daysString[10];
     sprintf(daysString, "%d", days);
@@ -45,7 +45,7 @@ vector<Quote> Yahoo::getIntradayQuotes(const string &symb, const int days){
         quote.open = val["open"].GetDouble();
         quote.close = val["close"].GetDouble();
         
-        quotes.push_back(quote);
+        quotes.add(quote);
     }
     
     return quotes;

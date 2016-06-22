@@ -7,6 +7,7 @@
 #include "yahoo.h"
 #include "series.h"
 #include "mt.h"
+#include "strategy.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]){
     //string start = "2000-01-01";
     string start = "1990-01-01";
        
-    vector<Quote> quotes;
+    QuoteHistory quotes;
     
     // test with daily quotes from quandl
     //quotes = Quandl::getQuotes(dataset, symb, start);
@@ -55,18 +56,18 @@ int main(int argc, char *argv[]){
     FILE *f = fopen(symb.c_str(), "w");
     for(size_t i=0; i<quotes.size(); i++){
         fprintf(f, "%s\t%ld\t%.5f\t%.5f\n", 
-                quotes[i].date.c_str(), quotes[i].timestamp, quotes[i].open, quotes[i].close);
+                quotes.date[i].c_str(), quotes.timestamp[i], quotes.open[i], quotes.close[i]);
     }
     fclose(f);
     
-    f = fopen((symb+"g").c_str(), "w");
+    /*f = fopen((symb+"g").c_str(), "w");
     for(size_t i=1; i<quotes.size(); i++){
         fprintf(f, "%s\t%ld\t%.5f\t%.5f\n", 
                 quotes[i].date.c_str(), quotes[i].timestamp, 
                 quotes[i].open - quotes[i-1].open, 
                 quotes[i].close - quotes[i-1].close);
     }
-    fclose(f);
+    fclose(f);*/
 
     vector<double> vals;
     
@@ -75,32 +76,42 @@ int main(int argc, char *argv[]){
         vals.push_back(val);
     }*/
 
-    for(size_t i=1; i<quotes.size(); i++){
-        double val = quotes[i].open - quotes[i-1].open;
-        vals.push_back(val);
-    }
+    //for(size_t i=1; i<quotes.size(); i++){
+//        double val = quotes[i].open - quotes[i-1].open;
+//        vals.push_back(val);
+    //}
     
-    vector<double> distr = calculateDistribution(vals, -5, 5, 100);
+    /*vector<double> distr = calculateDistribution(vals, -.001, .001, 100);
     f = fopen("distr", "w");
     for(int i = 0; i<distr.size(); i++){
         fprintf(f, "%d\t%.10f\n", i, distr[i]);
         
     }
-    fclose(f);
+    fclose(f);*/
     
-    double av = calculateAverage(vals.begin(), vals.size());
+    /*double av = calculateAverage(vals.begin(), vals.size());
     printf("average %g\n", av);
     f = fopen("auto", "w");
-    for(int i = 0; i<100; i++){
+    for(int i = 0; i<10; i++){
         double aut = calculateAutocorrelation(vals.begin(), vals.size(), i, &av);
         printf("autocorrelation %d %g\n", i, aut);
         
         fprintf(f, "%d\t%.10f\n", i, aut);
         
     }
-    fclose(f);
+    fclose(f);*/
     
-    // here you can add testing strategy on historical data quotes
+    // here we add testing strategy on historical data quotes
+    ImageStrategy strategy;
+    strategy.length = 10;
+    strategy.length_future = 5;
+    strategy.stop_loss = .01;
+    strategy.take_profit = .01;
+    strategy.corr_min = 10;
+    strategy.delta_min = 0;
+    strategy.study = quotes;
+    
+    //strategy.test(quotes);
 
     
     printf("Done...\n");

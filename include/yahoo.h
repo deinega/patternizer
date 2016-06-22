@@ -11,7 +11,7 @@ using namespace std;
 class Yahoo{
 public:
 
-    static vector<Quote> getIntradayQuotes(const string &symb, 
+    static QuoteHistory getIntradayQuotes(const string &symb, 
         const int days);
 
 };

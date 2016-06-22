@@ -10,7 +10,7 @@ using namespace std;
 class Quandl{
 public:
     
-    static vector<Quote> getQuotes(const string &dataset, const string &symb, 
+    static QuoteHistory getQuotes(const string &dataset, const string &symb, 
         const string &start = string(""), const string &end = string(""));
     
 };

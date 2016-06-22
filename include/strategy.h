@@ -32,7 +32,7 @@ public:
 
 class Strategy{
 public:
-    virtual double test(const vector<Quote> &quotes) = 0;
+    virtual double test(const QuoteHistory &quotes) = 0;
 };
 
 class ImageStrategy: public Strategy{
@@ -42,12 +42,12 @@ public:
     double corr_min; // minimal correlation value to open a deal
     double delta_min; 
     
-    vector<Quote> study; // study image
+    QuoteHistory study; // study image
     
     double take_profit;
     double stop_loss;    
   
-    virtual double test(const vector<Quote> &quotes){
+    virtual double test(const QuoteHistory &quotes){
         
         vector<Order> orders;
         
@@ -55,15 +55,15 @@ public:
             int num = 0;
             double delta = 0;
             for(size_t j = 0; i<study.size()-length -length_future; j++){
-                double corr = calculateCorrelation(study.begin() + j, quotes.begin() + i, length);
+                double corr = calculateCorrelation(study.open.begin() + j, quotes.open.begin() + i, length);
                 if(corr >= corr_min){
                     num++;
-                    delta += study[i + length -length_future] - study[i + length];
+                    delta += study.open[i + length -length_future] - study.open[i + length];
                 }
             }
             delta /= num;
             if(fabs(delta) >= delta_min){
-                orders.push_back(Order(delta>0, quotes[i].open, take_profit, stop_loss));
+                orders.push_back(Order(delta>0, quotes.open[i], take_profit, stop_loss));
             }
         }
     }

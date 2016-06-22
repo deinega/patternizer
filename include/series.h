@@ -27,8 +27,8 @@ double calculateAutocorrelation(it_t it, int sz, int shift, double *av_calculate
     return aut;
 }
 
-template<class it_t>
-double calculateCorrelation(it_t it1, it_t it2, int sz){
+template<class it1_t, class it2_t>
+double calculateCorrelation(it1_t it1, it2_t it2, int sz){
     double av1 = calculateAverage(it1, sz);
     double av2 = calculateAverage(it2, sz);
     double corr = 0;

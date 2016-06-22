@@ -4,9 +4,9 @@
 #include "mt.h"
 #include "string_utils.h"
 
-vector<Quote> MT::getQuotes(const string &fname){
+QuoteHistory MT::getQuotes(const string &fname){
     
-    vector<Quote> quotes;
+    QuoteHistory quotes;
     
     //string str = fileToString(fname);
     //printf("%s\n", fname.c_str());
@@ -30,7 +30,7 @@ vector<Quote> MT::getQuotes(const string &fname){
         quote.open = atof(str.substr(17, 7).c_str());
         //printf("%s\t%f\n", quote.date.c_str(), quote.open);
         //exit(0);
-        quotes.push_back(quote);
+        quotes.add(quote);
     }
 
     fclose(f);
