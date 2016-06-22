@@ -1,6 +1,7 @@
 #ifndef _STRATEGY_H
 #define _STRATEGY_H
 
+#include "series.h"
 #include "quote.h"
 
 class Order{
@@ -54,7 +55,7 @@ public:
             int num = 0;
             double delta = 0;
             for(size_t j = 0; i<study.size()-length -length_future; j++){
-                double corr;
+                double corr = calculateCorrelation(study.begin() + j, quotes.begin() + i, length);
                 if(corr >= corr_min){
                     num++;
                     delta += study[i + length -length_future] - study[i + length];
