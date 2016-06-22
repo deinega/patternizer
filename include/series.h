@@ -16,20 +16,6 @@ double calculateAverage(it_t it, int sz){
     return av;
 }
 
-template<class it_t>
-double calculateAutocorrelation(it_t it, int sz, int shift, double *av_calculated){
-    double av = av_calculated ? *av_calculated : calculateAverage(it, sz);
-    
-    double aut = 0;
-    
-    for(int i = 0; i<sz-shift; i++, it++){
-        aut += (*(it + shift) - av) * (*it - av);
-    }
-    aut /= sz - 1 - shift;
-    
-    return aut;
-}
-
 template<class it1_t, class it2_t>
 double calculateCorrelation(it1_t it1, it2_t it2, int sz){
     double av1 = calculateAverage(it1, sz);
@@ -42,6 +28,11 @@ double calculateCorrelation(it1_t it1, it2_t it2, int sz){
     }
     double corr = cov/sqrt(sigma1 * sigma2);
     return corr;
+}
+
+template<class it_t>
+double calculateAutocorrelation(it_t it, int sz, int shift){
+    return calculateCorrelation(it, it+shift, sz);
 }
 
 template<class it1_t, class it2_t>
