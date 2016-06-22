@@ -88,6 +88,8 @@ public:
             if(i%100 == 0)
                 printf("%d points...\n", i);
         }
+        
+        return tot;
     }
     
 };
