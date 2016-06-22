@@ -34,10 +34,13 @@ template<class it1_t, class it2_t>
 double calculateCorrelation(it1_t it1, it2_t it2, int sz){
     double av1 = calculateAverage(it1, sz);
     double av2 = calculateAverage(it2, sz);
-    double corr = 0;
+    double sigma1 = 0, sigma2 = 0, cov = 0;
     for(int i=0; i<sz; i++, it1++, it2++){
-        corr += (*it1 - av1) * (*it2 - av2);
+        sigma1 += (*it1 - av1) * (*it1 - av1);
+        sigma2 += (*it2 - av2) * (*it2 - av2);
+        cov += (*it1 - av1) * (*it2 - av2);
     }
+    double corr = cov/sqrt(sigma1 * sigma2);
     return corr;
 }
 
