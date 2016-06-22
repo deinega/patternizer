@@ -36,7 +36,7 @@ double calculateAutocorrelation(it_t it, int sz, int shift){
 }
 
 template<class it1_t, class it2_t>
-double record(const char *fname, it1_t it1, it2_t it2, int sz){
+void record(const char *fname, it1_t it1, it2_t it2, int sz){
     FILE *f = fopen(fname, "w");
     for(int i=0; i<sz; i++, it1++, it2++){
         fprintf(f, "%d\t%g\t%g\n", i, *it1, *it2);
