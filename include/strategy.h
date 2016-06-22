@@ -49,26 +49,41 @@ public:
   
     virtual double test(const QuoteHistory &quotes){
         
-        vector<Order> orders;
+        vector<Order> orders; // currently only one order is allowed
+        double tot = 0; // total profit
+        
+        int img = 0;
         
         for(size_t i = length; i<quotes.size() -length; i++){
-            int num = 0;
-            double delta = 0;
-            for(size_t j = 0; j < i-length; j++){
-                double corr = calculateCorrelation(study.open.begin() + j, quotes.open.begin() + i, length);
-                //printf("%g\n", corr);
-                if(corr >= corr_min){
-                    num++;
-                    delta += study.open[j + length -length_future] - study.open[j + length];
-                    printf("correlation %g, i = %d,j = %d\n", corr, i, j);
-                    char fcorr[100];
-                    sprintf(fcorr, "corr%d.d", num);
-                    record(fcorr, study.open.begin() + j, quotes.open.begin() + i, length);
+            if(orders.size()){
+                double profit;
+                bool close = orders[0].update(quotes.open[i], profit);
+                if(close){
+                    printf("Order closed with profit %g\n", profit);
+                    tot += profit;
+                    orders.pop_back();
                 }
             }
-            delta /= num;
-            if(fabs(delta) >= delta_min){
-                orders.push_back(Order(delta>0, quotes.open[i], take_profit, stop_loss));
+            else{
+                int num = 0;
+                double delta = 0;
+                for(size_t j = 0; j < i-length; j++){
+                    double corr = calculateCorrelation(study.open.begin() + j, quotes.open.begin() + i, length);
+                    //printf("%g\n", corr);
+                    if(corr >= corr_min){
+                        num++;
+                        delta += study.open[j + length -length_future] - study.open[j + length];
+                        printf("correlation %g, i = %d,j = %d\n", corr, i, j);
+                        char fcorr[100];
+                        sprintf(fcorr, "corr%d.d", img++);
+                        record(fcorr, study.open.begin() + j, quotes.open.begin() + i, length + length);
+                    }
+                }
+                delta /= num;
+                if(fabs(delta) >= delta_min){
+                    printf("Order; delta %g\n", delta);
+                    orders.push_back(Order(delta>0, quotes.open[i], take_profit, stop_loss));
+                }
             }
             if(i%100 == 0)
                 printf("%d points...\n", i);
