@@ -12,6 +12,7 @@ struct Quote{
   double open;
   double close;
 
+  Quote(): timestamp(0), open(0), close(0){}
 };
 
 #endif

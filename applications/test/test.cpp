@@ -6,6 +6,7 @@
 #include "quandl.h"
 #include "yahoo.h"
 #include "series.h"
+#include "mt.h"
 
 using namespace std;
 
@@ -23,8 +24,9 @@ int main(int argc, char *argv[]){
     vector<Quote> quotes;
     
     // test with daily quotes from quandl
-    quotes = Quandl::getQuotes(dataset, symb, start);
+    //quotes = Quandl::getQuotes(dataset, symb, start);
     
+    //test with yahoo
    //quotes = Yahoo::getIntradayQuotes(symb, 100);
    /* 
     // test with some math functions
@@ -43,6 +45,9 @@ int main(int argc, char *argv[]){
         quotes.push_back(quote);        
     }*/
 
+    // test with metatrader
+    quotes = MT::getQuotes("/home/alex/eur");
+    
     
     printf("data size: %d\n", (int)quotes.size());
     
