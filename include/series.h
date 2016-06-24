@@ -31,6 +31,8 @@ double calculateCorrelation(it1_t it1, it2_t it2, int sz){
         sigma2 += (*it2 - av2) * (*it2 - av2);
         cov += (*it1 - av1) * (*it2 - av2);
     }
+    if(sigma1 == 0 || sigma2 == 0)
+        return 0;
     double corr = cov/sqrt(sigma1 * sigma2);
     return corr;
 }
