@@ -3,11 +3,14 @@
 
 #include "quandl.h"
 #include <stdio.h>
+#include <math.h>
 
 using namespace std;
 
 template<class it_t>
 double calculateAverage(it_t it, int sz){
+    if(sz == 0)
+        return 0;
     double av = 0;
     for(int i=0; i<sz; i++, it++){
         av += *it;
@@ -18,6 +21,8 @@ double calculateAverage(it_t it, int sz){
 
 template<class it1_t, class it2_t>
 double calculateCorrelation(it1_t it1, it2_t it2, int sz){
+    if(sz == 0)
+        return 0;
     double av1 = calculateAverage(it1, sz);
     double av2 = calculateAverage(it2, sz);
     double sigma1 = 0, sigma2 = 0, cov = 0;
