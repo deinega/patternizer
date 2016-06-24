@@ -14,12 +14,12 @@ void Analysis::analize(const vector<double> &process){
             if(c >= corr_min || c <= -corr_min){
                 char fname[100];
                 if(c >= corr_min){
-                    printf("corr: %.g -> %g\n", c, cf);
+                    printf("corr %d: %.g -> %g\n", corr_futures.size(), c, cf);
                     sprintf(fname, "corr%d.d", corr_futures.size());
                     corr_futures.push_back(cf);
                 }
                 else if(c <= - corr_min){
-                    printf("anticorr: %g -> %g\n", c, cf);                    
+                    printf("anticorr %d: %g -> %g\n", anticorr_futures.size(), c, cf);
                     sprintf(fname, "anticorr%d.d", anticorr_futures.size());
                     anticorr_futures.push_back(cf);
                 }
@@ -35,9 +35,6 @@ void Analysis::analize(const vector<double> &process){
             printf("%d steps...\n", i);
         }
     }
-    //sort(corr_futures.begin(), corr_futures.end());
-    //sort(anticorr_futures.begin(), anticorr_futures.end());
-    //sort(corr_tot_futures.begin(), corr_tot_futures.end());
     
     double corr_futures_av = calculateAverage(corr_futures.begin(), corr_futures.size());
     double anticorr_futures_av = calculateAverage(anticorr_futures.begin(), anticorr_futures.size());
@@ -46,4 +43,18 @@ void Analysis::analize(const vector<double> &process){
     printf("average future correlation for correlations %g\n", corr_futures_av);
     printf("average future correlation for anticorrelations %g\n", anticorr_futures_av);
     printf("average future correlation for all %g\n", corr_tot_futures_av);
+
+    //sort(corr_futures.begin(), corr_futures.end());
+    //sort(anticorr_futures.begin(), anticorr_futures.end());
+    //sort(corr_tot_futures.begin(), corr_tot_futures.end());
+
+    vector<double> distr = calculateDistribution(corr_futures, -1, 1, 10);
+    record("corr_distr.d", distr.begin(), distr.size());
+
+    distr = calculateDistribution(anticorr_futures, -1, 1, 10);
+    record("anticorr_distr.d", distr.begin(), distr.size());
+
+    distr = calculateDistribution(corr_tot_futures, -1, 1, 10);
+    record("corr_tot_distr.d", distr.begin(), distr.size());
+    
 }
