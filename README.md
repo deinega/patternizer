@@ -1,6 +1,6 @@
 # kalich
 
-Это мы с пацанами написали, сидя на кортах за открытым багажником Лады Калины, откуда Сектор играл.
+Library for analysis of stock prices and looking for repetitive patterns
 
 ## Installation
 
