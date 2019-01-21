@@ -6,14 +6,14 @@ TSTDIR = ..
 INCLUDEDIR = ../../../include
 RAPIDJSONDIR = ../../../../rapidjson/include 
 
-CPPFLAGS = -MD -I$(INCLUDEDIR) -I$(RAPIDJSONDIR)
+CPPFLAGS = -MD -O3 -I$(INCLUDEDIR) -I$(RAPIDJSONDIR)
 
 VPATH = $(TSTDIR):$(SRCDIR)
 
 LIBS = -lcurl
 
-SRC = string_utils.cpp series.cpp \
-	quandl.cpp yahoo.cpp mt.cpp web.cpp test.cpp
+SRC = string_utils.cpp series.cpp analysis.cpp\
+	quandl.cpp yahoo.cpp mt.cpp web.cpp test_analysis.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
