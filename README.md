@@ -1,4 +1,4 @@
-# kalich
+# Patternizer 
 
 Library for analysis of stock prices and looking for repetitive patterns
 
